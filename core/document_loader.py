@@ -1,7 +1,23 @@
+import os
+import logging
 from langchain_community.document_loaders import JSONLoader
 from utils import metadata_extractor, include_title
-from config import DATA_PATH
+from core.config import DATA_PATH
 
+# Logging configuration
+log_filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'run.log')
+
+# Create log file if it doesn't exist.
+if not os.path.exists(log_filename):
+    open(log_filename, 'w').close()  # Create an empty log file if it doesn't exist
+
+logging.basicConfig(
+    filename=log_filename,
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+)
+
+logger = logging.getLogger()
 
 def load_documents():
     """
@@ -23,4 +39,4 @@ def load_documents():
 
 if __name__ == "__main__":
     docs = load_documents()
-    print(f"Loaded {len(docs)} documents.")
+    logger.info(f"Loaded {len(docs)} documents.")
