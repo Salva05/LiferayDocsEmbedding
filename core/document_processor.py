@@ -1,7 +1,7 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from core.config import  logger
 
-def chunk_documents(documents, chunk_size=1000, chunk_overlap=150):
+def chunk_documents(documents, chunk_size=8000, chunk_overlap=500):
     """
     Splits documents into smaller chunks using a recursive splitter.
     """
@@ -10,9 +10,10 @@ def chunk_documents(documents, chunk_size=1000, chunk_overlap=150):
         chunk_overlap=chunk_overlap,
         separators=["\n\n", "\n", " ", ""]
     )
-    # This returns a list of new document chunks
-    _chunks = text_splitter.split_documents(documents)
-    return _chunks
+    chunks = text_splitter.split_documents(documents)
+    logger.info(
+        f"Document split into {len(chunks)} chunks with a chunk size of ~{chunk_size} tokens (overlap: {chunk_overlap}).")
+    return chunks
 
 if __name__ == "__main__":
     # For testing

@@ -20,7 +20,10 @@ def create_vector_store(documents, persist_directory=None, collection_name="life
     Returns:
         A Chroma vector store object.
     """
-    embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
+    embeddings = OpenAIEmbeddings(
+        openai_api_key=OPENAI_API_KEY,
+        model="text-embedding-ada-002"
+    )
     vector_store = Chroma.from_documents(
         documents,
         embeddings,

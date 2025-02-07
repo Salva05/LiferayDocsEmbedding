@@ -12,19 +12,20 @@ def metadata_extractor(record: dict, metadata: dict) -> dict:
         dict: A dictionary containing the structured metadata for the document.
     """
 
-    # Extract common metadata fields from the scraped record
+    # Basic metadata fields
     metadata["url"] = record.get("url")
     metadata["title"] = record.get("title")
     metadata["path"] = record.get("path")
     metadata["scraped_at"] = record.get("scraped_at")
 
-    # Extract metadata field, but excludes the field Deployment Approach (not really relevant)
-    metadata["metadata"] = {
-        key: value
-        for key, value in filter(
-            lambda item: item[0] != "Deployment Approach",
-            record.get("metadata", {}).items(),
-        )
-    }
+    # Flatten the 'metadata' field (excluding 'Deployment Approach', not too relevant)
+    for key, value in record.get("metadata", {}).items():
+        if key == "Deployment Approach":
+            continue
+        # If value is a list, join them into a comma-separated string
+        if isinstance(value, list):
+            metadata[f"metadata_{key}"] = ", ".join(value)
+        else:
+            metadata[f"metadata_{key}"] = value
 
     return metadata
