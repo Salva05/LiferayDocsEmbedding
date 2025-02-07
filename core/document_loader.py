@@ -1,23 +1,6 @@
-import os
-import logging
 from langchain_community.document_loaders import JSONLoader
-from core.utils import metadata_extractor, include_title
-from core.config import DATA_PATH
-
-# Logging configuration
-log_filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'run.log')
-
-# Create log file if it doesn't exist.
-if not os.path.exists(log_filename):
-    open(log_filename, 'w').close()  # Create an empty log file if it doesn't exist
-
-logging.basicConfig(
-    filename=log_filename,
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-)
-
-logger = logging.getLogger()
+from core.utils import metadata_extractor
+from core.config import DATA_PATH, logger
 
 def load_documents():
     """
@@ -33,10 +16,10 @@ def load_documents():
         metadata_func=metadata_extractor,
     )
     documents = loader.load()
-    include_title(documents)  # Prepend title to each Document's page_content
+
+    logger.info(f"Loaded {len(documents)} documents")
     return documents
 
-
 if __name__ == "__main__":
-    docs = load_documents()
-    logger.info(f"Loaded {len(docs)} documents.")
+    # For testing
+    load_documents()

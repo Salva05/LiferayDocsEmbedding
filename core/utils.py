@@ -28,12 +28,3 @@ def metadata_extractor(record: dict, metadata: dict) -> dict:
     }
 
     return metadata
-
-
-def include_title(docs):
-    """
-    Prepend the title to 'page_content' field of each document
-    """
-    for doc in docs:
-        title = doc.metadata.get("title", "Untitled")
-        doc.page_content = f"Title: {title}\n\n{doc.page_content}"
