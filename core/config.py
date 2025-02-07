@@ -6,6 +6,7 @@ load_dotenv()
 
 DATA_PATH = os.getenv("DATA")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+CHROMA_DB_DIR = os.getenv("CHROMA_DB_DIR", "chroma_db")  # Directory to persist the Chroma DB
 
 # Logging setup
 log_filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'run.log')
