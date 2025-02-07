@@ -1,0 +1,20 @@
+{
+  "url": "https://learn.liferay.com/w/dxp/index",
+  "title": "This is a sample json line",
+  "content": "Here goes the main content of the page scraped ...",
+  "path": "/ DXP / Indexing",
+  "metadata": {
+    "Capability": [
+      "Platform"
+    ],
+    "Resource Type": [
+      "Official Documentation"
+    ],
+    "Deployment Approach": [
+      "Liferay PaaS",
+      "Liferay SaaS",
+      "Liferay Self-Hosted"
+    ]
+  },
+  "scraped_at": "2025-02-05T20:11:26.358643+00:00"
+}
