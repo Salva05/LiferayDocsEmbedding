@@ -21,10 +21,14 @@ def metadata_extractor(record: dict, metadata: dict) -> dict:
     # Extract metadata field, but excludes the field Deployment Approach (not really relevant)
     metadata["metadata"] = {
         key: value
-        for key, value in filter(lambda item: item[0] != "Deployment Approach", record.get("metadata", {}).items())
+        for key, value in filter(
+            lambda item: item[0] != "Deployment Approach",
+            record.get("metadata", {}).items(),
+        )
     }
 
     return metadata
+
 
 def include_title(docs):
     """

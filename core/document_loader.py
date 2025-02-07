@@ -1,7 +1,7 @@
 import os
 import logging
 from langchain_community.document_loaders import JSONLoader
-from utils import metadata_extractor, include_title
+from core.utils import metadata_extractor, include_title
 from core.config import DATA_PATH
 
 # Logging configuration
