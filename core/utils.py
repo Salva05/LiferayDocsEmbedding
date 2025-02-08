@@ -1,3 +1,5 @@
+from core.config import logger
+
 def metadata_extractor(record: dict, metadata: dict) -> dict:
     """
     Extracts each key that is not 'content' from a DocumentationItem JSON record
@@ -71,3 +73,22 @@ def post_process(documents):
             doc.page_content = f"{header}\n\n{doc.page_content}"
 
     return documents
+
+def deduplicate_documents(documents):
+    """
+    Filters out duplicate document objects from a list based on their content.
+    The need arises from the overlap chunk that may feed into the model same documents
+    """
+    unique_docs = []
+    seen = set()
+    for doc in documents:
+        # Normalize the content for comparison.
+        normalized = doc.page_content.strip().lower()
+        if normalized not in seen:
+            seen.add(normalized)
+            unique_docs.append(doc)
+        else:
+            # Log a warning showing only the first 10 characters of the duplicate document's content.
+            truncated = doc.page_content.strip()[:10]
+            logger.warning(f"Duplicate document found: (Firs 10 chars) {truncated}...")
+    return unique_docs

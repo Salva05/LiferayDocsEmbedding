@@ -16,6 +16,7 @@ def load_documents():
         metadata_func=metadata_extractor,
     )
     documents = loader.load()
+    documents = post_process(documents)  # Include some metadata in page_content for making them available to the model
 
     logger.info(f"Loaded {len(documents)} documents")
     return documents
