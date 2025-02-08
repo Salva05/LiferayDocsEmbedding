@@ -2,7 +2,7 @@
 Module for creating and persisting a Chroma vector store from document chunks.
 """
 
-from langchain_openai import OpenAIEmbeddings
+from langchain.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
 from core.config import OPENAI_API_KEY, logger
@@ -10,7 +10,7 @@ from core.config import OPENAI_API_KEY, logger
 
 def create_vector_store(documents, persist_directory=None, collection_name="liferay_docs"):
     """
-    Creates a Chroma vector store from the given document chunks.
+    Creates a Chroma vector store from the given document chunks using the E5-base-v2 model.
 
     Args:
         documents: List of document chunks (output of the text splitter).
@@ -20,10 +20,13 @@ def create_vector_store(documents, persist_directory=None, collection_name="life
     Returns:
         A Chroma vector store object.
     """
-    embeddings = OpenAIEmbeddings(
-        openai_api_key=OPENAI_API_KEY,
-        model="text-embedding-ada-002"
+    # Instantiate the embedding model with E5-base-v2.
+    # You can specify "cuda" for GPU acceleration if available; otherwise, use "cpu".
+    embeddings = HuggingFaceEmbeddings(
+        model_name="intfloat/e5-base-v2",
+        model_kwargs={"device": "cuda"}  # Change to "cpu" if no GPU is available
     )
+
     vector_store = Chroma.from_documents(
         documents,
         embeddings,
@@ -41,4 +44,5 @@ if __name__ == "__main__":
     docs = load_documents()
     chunks = chunk_documents(docs)
     store = create_vector_store(chunks, persist_directory="chroma_db")
+    store.persist()  # Saves your embeddings and data to disk
     logger.info("Vector store persisted to disk.")
