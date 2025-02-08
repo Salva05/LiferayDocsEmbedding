@@ -52,14 +52,17 @@ def post_process(documents):
     for doc in documents:
         # Retrieve metadata values, if they exist
         title = doc.metadata.get("title", "").strip()
-        path = doc.metadata.get("path", "").strip()
+        doc_path = doc.metadata.get("path", "").strip()
+        source = doc.metadata.get("url", "").strip()
 
         # Build header lines based on available metadata
         header_lines = []
         if title:
             header_lines.append(f"Title: {title}")
-        if path:
-            header_lines.append(f"Path: {path}")
+        if doc_path:
+            header_lines.append(f"Documentation Path: {doc_path}")
+        if source:
+            header_lines.append(f"Source: {source}")
 
         # If header has been constructed
         if header_lines:
