@@ -29,3 +29,42 @@ def metadata_extractor(record: dict, metadata: dict) -> dict:
             metadata[f"metadata_{key}"] = value
 
     return metadata
+
+def post_process(documents):
+    """
+    Post-processes a list of LangChain Document objects by prepending
+    metadata information (specifically 'title' and 'path') to each document's
+    page content.
+
+    Each document is expected to have:
+      - a `metadata` attribute (a dictionary) with optional keys 'title' and 'path'
+      - a `page_content` attribute containing the main text of the document
+
+    The function constructs a header from the available metadata and
+    prepends it to the existing page content, separated by blank lines.
+
+    Args:
+        documents (list): A list of LangChain Document objects.
+
+    Returns:
+        list: The list of Document objects with updated page content.
+    """
+    for doc in documents:
+        # Retrieve metadata values, if they exist
+        title = doc.metadata.get("title", "").strip()
+        path = doc.metadata.get("path", "").strip()
+
+        # Build header lines based on available metadata
+        header_lines = []
+        if title:
+            header_lines.append(f"Title: {title}")
+        if path:
+            header_lines.append(f"Path: {path}")
+
+        # If header has been constructed
+        if header_lines:
+            header = "\n".join(header_lines)
+            # Prepend it and add a blank line for readability
+            doc.page_content = f"{header}\n\n{doc.page_content}"
+
+    return documents

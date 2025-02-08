@@ -1,5 +1,5 @@
 from langchain_community.document_loaders import JSONLoader
-from core.utils import metadata_extractor
+from core.utils import metadata_extractor, post_process
 from core.config import DATA_PATH, logger
 
 def load_documents():
@@ -22,4 +22,7 @@ def load_documents():
 
 if __name__ == "__main__":
     # For testing
-    load_documents()
+    docs = load_documents()
+    docs = post_process(docs)
+
+    print(docs[0])
