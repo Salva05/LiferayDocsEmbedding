@@ -45,8 +45,7 @@ if __name__ == "__main__":
     from core.document_loader import load_documents
     from core.document_processor import chunk_documents
 
-    docs = load_documents()
+    docs = load_documents(path_to_data="chroma_db")
     chunks = chunk_documents(docs)
     store = create_vector_store(chunks, persist_directory="chroma_db")
-    store.persist()  # Saves your embeddings and data to disk
     logger.info("Vector store persisted to disk.")

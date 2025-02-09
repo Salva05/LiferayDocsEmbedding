@@ -30,11 +30,8 @@ def main():
         documents=document_chunks,
         persist_directory=CHROMA_DB_DIR,
         collection_name="liferay_docs",
-        device_type="cuda"  # Only if a cuda-capable GPU is available, otherwise 'cpu'
+        device_type="cpu"  # Only if a cuda-capable GPU is available, otherwise 'cpu'
     )
-
-    # Persist the vector store on disk
-    vector_storage.persist()
 
     logger.info("Vector store correctly persisted to disk.")
 
