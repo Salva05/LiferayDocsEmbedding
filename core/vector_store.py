@@ -5,7 +5,7 @@ Module for creating and persisting a Chroma vector store from document chunks.
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
-from core.config import OPENAI_API_KEY, logger
+from core.config import logger
 
 
 def create_vector_store(documents, persist_directory=None, collection_name="liferay_docs"):
@@ -13,18 +13,20 @@ def create_vector_store(documents, persist_directory=None, collection_name="life
     Creates a Chroma vector store from the given document chunks using the E5-base-v2 model.
 
     Args:
-        documents: List of document chunks (output of the text splitter).
-        persist_directory: Directory to persist the vector store. If None, the store is in-memory.
-        collection_name: Name of the collection within Chroma.
+        documents (List[Document]): A list of document chunks for which embeddings will be computed (output of the text splitter).
+        persist_directory (str, optional): The directory where the vector store will be persisted.
+            If None, the vector store will be created in-memory.
+        collection_name (str, optional): The name of the collection within the vector store.
+            Defaults to "liferay_docs".
 
     Returns:
-        A Chroma vector store object.
+        Chroma: A Chroma vector store object containing embeddings for the provided documents.
     """
     # Instantiate the embedding model with E5-base-v2.
     # You can specify "cuda" for GPU acceleration if available; otherwise, use "cpu".
     embeddings = HuggingFaceEmbeddings(
         model_name="intfloat/e5-base-v2",
-        model_kwargs={"device": "cuda"}  # Change to "cpu" if no GPU is available
+        model_kwargs={"device": "cuda"}  # Change to "cpu" if no GPU is available (This requires PyTorch)
     )
 
     vector_store = Chroma.from_documents(

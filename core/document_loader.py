@@ -5,7 +5,13 @@ from core.config import DATA_PATH, logger
 def load_documents():
     """
     Loads documents from a JSON file, applies metadata extraction,
-    and includes the title in the page content.
+    and includes some metadata in the page content of the document.
+
+    Returns:
+        List[Document]: A list of Document objects loaded from the JSON file.
+            Each Document contains:
+              - page_content: The main content extracted from the JSON field specified by 'content_key'.
+              - metadata: A dictionary with additional information
     """
     loader = JSONLoader(
         file_path=DATA_PATH,
@@ -26,4 +32,4 @@ if __name__ == "__main__":
     docs = load_documents()
     docs = post_process(docs)
 
-    print(docs[0])
+    print(docs[0])  # Pick the first loaded document to analyze its shape

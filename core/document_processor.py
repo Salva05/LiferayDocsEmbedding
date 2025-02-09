@@ -3,7 +3,15 @@ from core.config import  logger
 
 def chunk_documents(documents, chunk_size=2000, chunk_overlap=200):
     """
-    Splits documents into smaller chunks using a recursive splitter.
+    Splits a list of documents into smaller text chunks using a recursive character text splitter.
+
+    Args:
+        documents (List[Document]): A list of Document objects to be split.
+        chunk_size (int, optional): Maximum token size for each chunk. Defaults to 2000.
+        chunk_overlap (int, optional): Number of tokens to overlap between consecutive chunks. Defaults to 200.
+
+    Returns:
+        List[Document]: A list of Document chunks resulting from splitting the original documents.
     """
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
