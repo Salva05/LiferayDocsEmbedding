@@ -1,8 +1,8 @@
 from langchain_community.document_loaders import JSONLoader
 from core.utils import metadata_extractor, post_process
-from core.config import DATA_PATH, logger
+from core.config import logger
 
-def load_documents():
+def load_documents(path_to_data: str):
     """
     Loads documents from a JSON file, applies metadata extraction,
     and includes some metadata in the page content of the document.
@@ -14,7 +14,7 @@ def load_documents():
               - metadata: A dictionary with additional information
     """
     loader = JSONLoader(
-        file_path=DATA_PATH,
+        file_path=path_to_data,
         jq_schema=".",
         content_key="content",  # Field for page_content extraction
         text_content=True,
