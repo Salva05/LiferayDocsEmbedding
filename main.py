@@ -21,8 +21,8 @@ def main():
     # Split Documents into manageable chunks
     document_chunks = chunk_documents(
         documents=documents,
-        chunk_size=4000,    # Should always fit in the context window of the model used
-        chunk_overlap=400
+        chunk_size=3000,    # Should always fit in the context window of the model used
+        chunk_overlap=100
     )
 
     # Create the vector store and embed the document chunks
@@ -30,7 +30,6 @@ def main():
         documents=document_chunks,
         persist_directory=CHROMA_DB_DIR,
         collection_name="liferay_docs",
-        device_type="cpu"  # Only if a cuda-capable GPU is available, otherwise 'cpu'
     )
 
     logger.info("Vector store correctly persisted to disk.")
