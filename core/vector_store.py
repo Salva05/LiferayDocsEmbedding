@@ -2,7 +2,7 @@
 Module for creating and persisting a Chroma vector store from document chunks.
 """
 
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain.embeddings import OpenAIEmbeddings
 from langchain_chroma import Chroma
 
 from core.config import logger
@@ -10,7 +10,7 @@ from core.config import logger
 
 def create_vector_store(documents, persist_directory=None, collection_name="liferay_docs", device_type="cpu"):
     """
-    Creates a Chroma vector store from the given document chunks using the E5-base-v2 model.
+    Creates a Chroma vector store from the given document chunks using the 'text-embedding-3-large'.
 
     Args:
         documents (List[Document]): A list of document chunks for which embeddings will be computed (output of the text splitter).
@@ -26,9 +26,8 @@ def create_vector_store(documents, persist_directory=None, collection_name="life
         Chroma: A Chroma vector store object containing embeddings for the provided documents.
     """
     # Embedding model
-    embeddings = HuggingFaceEmbeddings(
-        model_name="intfloat/e5-base-v2",
-        model_kwargs={"device": device_type}
+    embeddings = OpenAIEmbeddings(
+        model="text-embedding-3-large"
     )
 
     vector_store = Chroma.from_documents(

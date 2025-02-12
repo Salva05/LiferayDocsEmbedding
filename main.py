@@ -21,8 +21,8 @@ def main():
     # Split Documents into manageable chunks
     document_chunks = chunk_documents(
         documents=documents,
-        chunk_size=2000,    # Should always fit in the context window of the model used
-        chunk_overlap=200
+        chunk_size=4000,    # Should always fit in the context window of the model used
+        chunk_overlap=400
     )
 
     # Create the vector store and embed the document chunks

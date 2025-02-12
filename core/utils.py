@@ -69,8 +69,8 @@ def post_process(documents):
         # If header has been constructed
         if header_lines:
             header = "\n".join(header_lines)
-            # Prepend it and add a blank line for readability
-            doc.page_content = f"{header}\n\n{doc.page_content}"
+            # Inject DOC_START and DOC_END markers to delineate the document boundaries
+            doc.page_content = f"[DOC_START]\n{header}\n\n{doc.page_content}\n\n[DOC_END]"
 
     return documents
 

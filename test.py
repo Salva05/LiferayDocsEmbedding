@@ -17,7 +17,6 @@ class TestChromaVectorStore(unittest.TestCase):
         # Configure the embedding model
         self.device_type = "cpu"   # If CUDA-capable GPU is available, change to 'cuda'
         self.collection_name = "liferay_docs"
-        self.path_to_db = os.path.join(os.path.dirname(os.path.abspath(__file__)), CHROMA_DB_DIR)
 
         self.embeddings = HuggingFaceEmbeddings(
             model_name="intfloat/e5-base-v2",
@@ -26,7 +25,7 @@ class TestChromaVectorStore(unittest.TestCase):
 
         # Load the persisted vector store.
         self.store = Chroma(
-            persist_directory=self.path_to_db,
+            persist_directory=CHROMA_DB_DIR,
             collection_name=self.collection_name,
             embedding_function=self.embeddings
         )

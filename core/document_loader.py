@@ -1,6 +1,7 @@
 from langchain_community.document_loaders import JSONLoader
 from core.utils import metadata_extractor, post_process
-from core.config import logger
+from core.config import logger, DATA_PATH
+
 
 def load_documents(path_to_data: str):
     """
@@ -29,7 +30,7 @@ def load_documents(path_to_data: str):
 
 if __name__ == "__main__":
     # For testing
-    docs = load_documents()
+    docs = load_documents(DATA_PATH)
     docs = post_process(docs)
 
     print(docs[0])  # Pick the first loaded document to analyze its shape
