@@ -16,7 +16,7 @@ def chunk_documents(documents, chunk_size=4000, chunk_overlap=400):
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
-        separators=["[DOC_END]", "[DOC_START]", "\n\n", "\n"]
+        separators=["[DOC_END]", "\n \n \n", "\n\n", "\n"]
     )
     chunks = text_splitter.split_documents(documents)
     logger.info(

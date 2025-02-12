@@ -2,7 +2,7 @@
 Module for creating and persisting a Chroma vector store from document chunks.
 """
 
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 
 from core.config import logger
